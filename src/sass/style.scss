@@ -7,9 +7,12 @@
 }
 
 body {
-  background-color: blue;
   height: 100vh;
   width: 100vw;
+}
+
+.container {
+  width: 95vw;
 }
 
 #board {
@@ -18,7 +21,7 @@ body {
   left: 50%;
   transform-style: preserve-3d;
   transform: translate3d(-50%, -50%, 0);
-  width: 100vh;
+  width: 100%;
   height: 100vh;
   background: #32CD32;
   border-radius: 3px;
@@ -27,34 +30,44 @@ body {
 
 .cube1 {
   position: absolute;
-  top: 25%;
-  left: 25%;
+  top: 30%;
+  left: 20%;
   transform-style: preserve-3d;
   transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
-  //animation: move1 2s linear forwards, cube 6s linear forwards;
 }
 
 .cube2 {
   position: absolute;
-  top: 25%;
-  left: 75%;
+  top: 35%;
+  left: 37.5%;
   transform-style: preserve-3d;
   transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
-  //animation: move2 2s linear forwards, cube 4.5s linear forwards;
 }
-
-/*.cubeNumber2 {*/
-/*    animation: cube2 5s linear forwards;*/
-/*}*/
 
 .cube3 {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 25%;
   transform-style: preserve-3d;
   transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
-  //animation: cube 5.5s linear forwards;
 }
+
+.cube4 {
+  position: absolute;
+  top: 75%;
+  left: 20%;
+  transform-style: preserve-3d;
+  transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
+}
+
+.cube5 {
+  position: absolute;
+  top: 65%;
+  left: 30%;
+  transform-style: preserve-3d;
+  transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
+}
+
 
 .anim1 {
   animation: cube1 5s linear forwards;
@@ -80,377 +93,382 @@ body {
   animation: cube6 5s linear forwards;
 }
 
-  .cube4 {
-    position: absolute;
-    top: 75%;
-    left: 25%;
-    transform-style: preserve-3d;
-    transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
-    //animation: move4 2s linear forwards, cube 4s linear forwards;
+.one {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0px);
+  width: 100px;
+  height: 100px;
+  background: #f2eaea;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.two {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(0, -50%, -50px) rotate3d(0, 1, 0, 90deg);
+  width: 100px;
+  height: 100px;
+  background: #f2eaea;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.three {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, 0, -50px) rotate3d(1, 0, 0, 90deg);
+  width: 100px;
+  height: 100px;
+  background: #f2eaea;
+  border-radius: 10px;
+  padding: 17px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+
+.three > .dot:nth-of-type(1) {
+  align-self: flex-end;
+  position: relative;
+}
+
+.three > .dot:nth-of-type(2) {
+  align-self: center;
+}
+
+.three > .dot:nth-of-type(3) {
+  align-self: flex-start;
+}
+
+.four {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -100%, -50px) rotate3d(1, 0, 0, 90deg);
+  width: 100px;
+  height: 100px;
+  background: #f2eaea;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.four > .dotRow:nth-of-type(1) {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.four > .dotRow:nth-of-type(2) {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.five {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-100%, -50%, -50px) rotate3d(0, 1, 0, -90deg);
+  width: 100px;
+  height: 100px;
+  background: #f2eaea;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.five > .dotRow:nth-of-type(1) {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.five > .dotRow:nth-of-type(2) {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.five > .dotRow:nth-of-type(3) {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.six {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, -100px);
+  width: 100px;
+  height: 100px;
+  background: #f2eaea;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.six > .dotRow:nth-of-type(1) {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.six > .dotRow:nth-of-type(2) {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.six > .dotRow:nth-of-type(3) {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  background-color: #f44242;
+  border-radius: 3px;
+}
+
+/*                                                                1*/
+@keyframes cube1 {
+  0% {
+    transform: rotate3d(1, 1, 0, 0deg);
   }
-
-  .cube5 {
-    position: absolute;
-    top: 75%;
-    left: 75%;
-    transform-style: preserve-3d;
-    transform: translate3d(-50%, -50%, 0) rotate3d(1, 0, 0, 180deg);
-    //animation: move5 2s linear forwards, cube 5s linear forwards;
+  30% {
+    transform: rotate3d(-0.5, 0.9, 0.4, 180deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .one {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0px);
-    width: 100px;
-    height: 100px;
-    background: #f2eaea;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  60% {
+    transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0.5, 0, 40deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .two {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(0, -50%, -50px) rotate3d(0, 1, 0, 90deg);
-    width: 100px;
-    height: 100px;
-    background: #f2eaea;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  90% {
+    transform: rotate3d(0.9, 0, 0, 359deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .three {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, 0, -50px) rotate3d(1, 0, 0, 90deg);
-    width: 100px;
-    height: 100px;
-    background: #f2eaea;
-    border-radius: 10px;
-    padding: 17px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
+  100% {
+    transform: rotate3d(0.5, 0, 0.5, 360deg) scale3d(0.8, 0.8, 0.8);
   }
+}
 
 
-  .three > .dot:nth-of-type(1) {
-    align-self: flex-end;
-    position: relative;
+/*                                                                2*/
+@keyframes cube2 {
+  0% {
+    transform: rotate3d(1, 1, 0, 0deg);
   }
-
-  .three > .dot:nth-of-type(2) {
-    align-self: center;
+  25% {
+    transform: rotate3d(-0.5, 0.9, 0.4, 90deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .three >.dot:nth-of-type(3) {
-    align-self: flex-start;
+  50% {
+    transform: rotate3d(0, 0, 1, -120deg) rotate3d(1, 0.5, 0, -50deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .four {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -100%, -50px) rotate3d(1, 0, 0, 90deg);
-    width: 100px;
-    height: 100px;
-    background: #f2eaea;
-    border-radius: 10px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: space-evenly;
+  90% {
+    transform: rotate3d(0.5, 0, 0.5, 178deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .four > .dotRow:nth-of-type(1) {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  100% {
+    transform: translate3d(35px, 0, 0) rotate3d(0.5, 0, 0.5, 180deg) scale3d(0.8, 0.8, 0.8);
   }
+}
 
-  .four > .dotRow:nth-of-type(2) {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+/*                                                                    !*3*!*/
+@keyframes cube3 {
+  0% {
+    transform: rotate3d(1, 1, 0, 0deg);
   }
-
-  .five {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-100%, -50%, -50px) rotate3d(0, 1, 0, -90deg);
-    width: 100px;
-    height: 100px;
-    background: #f2eaea;
-    border-radius: 10px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
+  30% {
+    transform: rotate3d(-0.5, 0.9, 0.4, 260deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .five > .dotRow:nth-of-type(1){
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  55% {
+    transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0, 0, 90deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .five > .dotRow:nth-of-type(2){
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  90% {
+    transform: rotate3d(1, 0, 0, 1deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .five > .dotRow:nth-of-type(3){
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  100% {
+    transform: translate3d(0, -40px, 0) rotate3d(0, 0, 1, 0) rotate3d(1, 0, 0, 90deg) scale3d(0.8, 0.8, 0.8);
   }
+}
 
-  .six {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, -100px);
-    width: 100px;
-    height: 100px;
-    background: #f2eaea;
-    border-radius: 10px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
+/*                                                                    4*/
+@keyframes cube4 {
+  0% {
+    transform: rotate3d(1, 1, 0, 0deg);
   }
-
-  .six > .dotRow:nth-of-type(1) {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  30% {
+    transform: rotate3d(-0.5, 0.9, 0.4, 180deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .six > .dotRow:nth-of-type(2) {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  60% {
+    transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0.5, 0, 40deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .six > .dotRow:nth-of-type(3) {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  90% {
+    transform: rotate3d(0.9, 0, 0, 269deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .dot {
-    width: 15px;
-    height: 15px;
-    background-color: #f44242;
-    border-radius: 3px;
+  100% {
+    transform: translate3d(0, 30px, 0) rotate3d(0.9, 0, 0, 270deg) scale3d(0.8, 0.8, 0.8);
   }
-  /*                                                                    !*5*!*/
-  @keyframes cube5 {
-      0% {
-          transform: rotate3d(1, 1, 0, 0deg);
-      }
-      25% {
-          transform: rotate3d(-0.5, 0.9, 0.4, 190deg) scale3d(0.5, 0.5, 0.5);
-      }
-      60% {
-          transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0.5, 0, -30deg) scale3d(0.5, 0.5, 0.5);
-      }
-      100% {
-          transform: translate3d(35px, 0, 0) rotate3d(0, 1, 0, 90deg) scale3d(0.7, 0.7, 0.7);
-      }
+}
+
+/*                                                                    !*5*!*/
+@keyframes cube5 {
+  0% {
+    transform: rotate3d(1, 1, 0, 0deg);
   }
-  //
-  //@keyframes move1 {
-  //  0% {
-  //    top: 50%;
-  //    left: 50%;
-  //  }
-  //  100% {
-  //    top: 25%;
-  //    left: 25%;
-  //  }
-  //}
-  //
-  //@keyframes move2 {
-  //  0% {
-  //    top: 50%;
-  //    left: 50%;
-  //  }
-  //  100% {
-  //    top: 25%;
-  //    left: 75%;
-  //  }
-  //}
-  //
-  //@keyframes move4 {
-  //  0% {
-  //    top: 50%;
-  //    left: 50%;
-  //  }
-  //  100% {
-  //    top: 75%;
-  //    left: 25%;
-  //  }
-  //}
-  //
-  //@keyframes move5 {
-  //  0% {
-  //    top: 50%;
-  //    left: 50%;
-  //  }
-  //  100% {
-  //    top: 75%;
-  //    left: 75%;
-  //  }
-  //}
-
-
-  /*                                                                    !*3*!*/
-  @keyframes cube3 {
-    0% {
-      transform: rotate3d(1, 1, 0, 0deg);
-    }
-    30% {
-      transform: rotate3d(-0.5, 0.9, 0.4, 260deg) scale3d(0.5, 0.5, 0.5);
-    }
-    55% {
-      transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0, 0, 90deg) scale3d(0.5, 0.5, 0.5);
-    }
-    90% {
-      transform: rotate3d(1, 0, 0, 1deg) scale3d(0.5, 0.5, 0.5);
-    }
-    100% {
-      transform: rotate3d(1, 0, 0, 0deg) scale3d(0.7, 0.7, 0.7);
-    }
+  25% {
+    transform: rotate3d(-0.5, 0.9, 0.4, 190deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  /*!*                                                                    6*!*/
-  @keyframes cube6 {
-    0% {
-      transform: rotate3d(1, 1, 0, 0deg);
-    }
-    30% {
-      transform: rotate3d(-0.5, 0.9, 0.4, 260deg) scale3d(0.5, 0.5, 0.5);
-    }
-    50% {
-      transform: rotate3d(0, 0, 1, -60deg) rotate3d(1, 0.5, 0, 60deg) scale3d(0.5, 0.5, 0.5);
-    }
-    90% {
-      transform: rotate3d(1, 0, 0, -179deg) scale3d(0.5, 0.5, 0.5);
-    }
-    100% {
-      transform: rotate3d(1, 0, 0, -180deg) scale3d(0.7, 0.7, 0.7);
-    }
+  60% {
+    transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0.5, 0, -30deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  /*                                                                    4*/
-  @keyframes cube4 {
-    0% {
-      transform: rotate3d(1, 1, 0, 0deg);
-    }
-    30% {
-      transform: rotate3d(-0.5, 0.9, 0.4, 180deg) scale3d(0.5, 0.5, 0.5);
-    }
-    60% {
-      transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0.5, 0, 40deg) scale3d(0.5, 0.5, 0.5);
-    }
-    90% {
-      transform: rotate3d(0.9, 0, 0, 269deg) scale3d(0.5, 0.5, 0.5);
-    }
-    100% {
-      transform: translate3d(0, 30px, 0) rotate3d(0.9, 0, 0, 270deg) scale3d(0.7, 0.7, 0.7);
-    }
+  100% {
+    transform: translate3d(35px, 0, 0) rotate3d(0, 1, 0, 90deg) scale3d(0.8, 0.8, 0.8);
   }
+}
 
-
-  /*                                                                1*/
-  @keyframes cube1 {
-    0% {
-      transform: rotate3d(1, 1, 0, 0deg);
-    }
-    30% {
-      transform: rotate3d(-0.5, 0.9, 0.4, 180deg) scale3d(0.5, 0.5, 0.5);
-    }
-    60% {
-      transform: rotate3d(0, 0, 1, -30deg) rotate3d(1, 0.5, 0, 40deg) scale3d(0.5, 0.5, 0.5);
-    }
-    90% {
-      transform: rotate3d(0.9, 0, 0, 359deg) scale3d(0.5, 0.5, 0.5);
-    }
-    100% {
-      transform: rotate3d(0.5, 0, 0.5, 360deg) scale3d(0.7, 0.7, 0.7);
-    }
+/*!*                                                                    6*!*/
+@keyframes cube6 {
+  0% {
+    transform: rotate3d(1, 1, 0, 0deg);
   }
-
-
-  /*                                                                2*/
-  @keyframes cube2 {
-    0% {
-      transform: rotate3d(1, 1, 0, 0deg);
-    }
-    25% {
-      transform: rotate3d(-0.5, 0.9, 0.4, 90deg) scale3d(0.5, 0.5, 0.5);
-    }
-    50% {
-      transform: rotate3d(0, 0, 1, -120deg) rotate3d(1, 0.5, 0, -50deg) scale3d(0.5, 0.5, 0.5);
-    }
-    90% {
-      transform: rotate3d(0.5, 0, 0.5, 178deg) scale3d(0.5, 0.5, 0.5);
-    }
-    100% {
-      transform: translate3d(35px, 0, 0) rotate3d(0.5, 0, 0.5, 180deg) scale3d(0.7, 0.7, 0.7);
-    }
+  30% {
+    transform: rotate3d(-0.5, 0.9, 0.4, 260deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  /*@keyframes cube2 {
-      0% {
-          transform: rotate3d(1, 1, 0, 0deg);
-      }
-      25% {
-          transform: rotate3d(-0.5, 0.9, 0.4, 90deg) scale3d(0.5, 0.5, 0.5);
-      }
-      50% {
-          transform: rotate3d(0, 0, 1, -120deg) rotate3d(1, 0.5, 0, -50deg) scale3d(0.5, 0.5, 0.5);
-      }
-      100% {
-          transform: rotate3d(0.5, 0, 0.5, 180deg) scale3d(0.5, 0.5, 0.5);
-      }
-  }*/
-
-  .button {
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    height: 3rem;
-    width: 10rem;
+  50% {
+    transform: rotate3d(0, 0, 1, -60deg) rotate3d(1, 0.5, 0, 60deg) scale3d(0.5, 0.5, 0.5);
   }
-
-  .checked > div {
-    box-shadow: 0 0 0 5px red;
+  90% {
+    transform: rotate3d(1, 0, 0, -179deg) scale3d(0.5, 0.5, 0.5);
   }
+  100% {
+    transform: rotate3d(1, 0, 0, -180deg) scale3d(0.8, 0.8, 0.8);
+  }
+}
+
+.button {
+  position: absolute;
+  bottom: 5%;
+  left: 20%;
+  height: 3rem;
+  width: 10rem;
+}
+
+.checked > div {
+  box-shadow: 0 0 0 5px red;
+}
+
+.pos1 {
+  transform: rotate3d(0.5, 0, 0.5, 360deg) scale3d(0.8, 0.8, 0.8);
+}
+
+.pos2 {
+  transform: translate3d(35px, 0, 0) rotate3d(0.5, 0, 0.5, 180deg) scale3d(0.8, 0.8, 0.8);
+}
+
+.pos3 {
+  transform: translate3d(0, -40px, 0) rotate3d(0, 0, 1, 0) rotate3d(1, 0, 0, 90deg) scale3d(0.8, 0.8, 0.8);
+}
+
+.pos4 {
+  transform: translate3d(0, 30px, 0) rotate3d(0.9, 0, 0, 270deg) scale3d(0.8, 0.8, 0.8);
+}
+
+.pos5 {
+  transform: translate3d(35px, 0, 0) rotate3d(0, 1, 0, 90deg) scale3d(0.8, 0.8, 0.8);
+}
+
+.pos6 {
+  transform: rotate3d(1, 0, 0, -180deg) scale3d(0.8, 0.8, 0.8);
+}
+
+.tg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100vh;
+  background: #FFF;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tg-0lax {
+  font-size: 2rem;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.tg-1lax {
+  font-size: 2rem;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.tg-2lax {
+  font-size: 2rem;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.tg-cly2 {
+  font-size: 2rem;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.padd2l {
+  padding-left: 2rem
+}
+
+.score {
+  border: 3px solid #F00;
+  border-radius: 5px;
+  background-color: rgba(213, 97, 97, 0.25);
+}
+
+.description {
+  font-size: 1.3rem;
+}
+
+.tg-1lax:hover {
+  background-color: rgba(104, 104, 104, 0.15);
+}
+
+
+
+.active {
+  border: 3px solid gold;
+}
