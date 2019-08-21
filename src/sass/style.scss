@@ -11,10 +11,6 @@ body {
   width: 100vw;
 }
 
-.container {
-  width: 95vw;
-}
-
 #board {
   position: absolute;
   top: 50%;
@@ -467,7 +463,9 @@ body {
   background-color: rgba(104, 104, 104, 0.15);
 }
 
-
+.selected {
+  background-color: rgba(104, 104, 104, 0.15);
+}
 
 .active {
   border: 3px solid gold;
