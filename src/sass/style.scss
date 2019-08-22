@@ -431,6 +431,8 @@ body {
   font-size: 2rem;
   border: 1px solid #000;
   border-radius: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 .tg-2lax {
@@ -464,9 +466,30 @@ body {
 }
 
 .selected {
-  background-color: rgba(104, 104, 104, 0.15);
+  animation: selecting 0.5s linear forwards;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes selecting {
+  0% {
+    background-color: rgba(0, 0, 0, 0)
+  }
+  100% {
+    background-color: rgba(104, 104, 104, 0.15);
+  }
 }
 
 .active {
-  border: 3px solid gold;
+  animation: blinking 1s infinite alternate;
+  animation-timing-function: ease-in-out;
+  background-color: gold;
+}
+
+@keyframes blinking {
+  0% {
+    box-shadow: inset 0 0 0.2rem red, 0 0 0.2rem red;
+  }
+  100% {
+    box-shadow: inset 0 0 0.4rem red, 0 0 0 gold;
+  }
 }
