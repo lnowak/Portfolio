@@ -4,12 +4,20 @@ import ReactDOM from 'react-dom';
 import './../sass/style.scss'; // adres do głównego pliku SASS
 
 const tab = [
-    {id: 1, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-    {id: 2, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-    {id: 3, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-    {id: 4, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-    {id: 5, checked: false, number: (Math.round(Math.random()*(6-1)+1))}
-    ];
+    {id: 1, checked: false, number: 3},
+    {id: 2, checked: false, number: 6},
+    {id: 3, checked: false, number: 3},
+    {id: 4, checked: false, number: 4},
+    {id: 5, checked: false, number: 5}
+];
+
+// const tab = [
+//     {id: 1, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+//     {id: 2, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+//     {id: 3, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+//     {id: 4, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+//     {id: 5, checked: false, number: (Math.round(Math.random()*(6-1)+1))}
+// ];
 
 class App extends Component {
 
@@ -59,12 +67,13 @@ class Dice extends Component {
         const newTab = this.props.tab.map((el) => {
             el.checked = false;
             el.number = Math.round(Math.random()*(6-1)+1);
-            return el
+            return el;
+
         });
 
         this.setState( {
             currentPlayer : this.state.currentPlayer %2 + 1,
-            counter: 0,
+            counter: 1,
             tab: newTab,
         })
     };
@@ -74,6 +83,7 @@ class Dice extends Component {
         const newTab = this.state.tab.map(el => {
             if (!this.state.rollAgain && !el.checked) {
                 el.number = Math.round(Math.random()*(6-1)+1);
+                // el.number = 2
             }
             return el
         });
@@ -385,22 +395,43 @@ class Table extends Component {
     };
 
     smalls = (element) => {
+        const numbers = Array.from(new Set(this.props.tab.map(cube => cube.number)));
 
-        let fnScore = 0;
-        this.props.tab.map( (part) => {
-
+        const newScoreTab = [];
+        this.props.tab.map( e => {
+            newScoreTab.push(e.number);
+            return newScoreTab
         });
+        newScoreTab.sort((a,b) => a-b);
+        console.log(newScoreTab);
+        let count = 0;
+        newScoreTab.reduce((prev, curr) => {
+            if (prev +1 === curr) {
+                count++;
+            } else {
+                count = 0;
+            }
+            return curr
+        }, 0);
 
+        const isFull = count >= 4;
+
+        console.log(count, numbers, numbers.length, isFull);
+        let fnScore = 0;
+        if (isFull) {
+            fnScore = 30;
+        }
         element.innerText = fnScore;
     };
 
     larges = (element) => {
-
+        const numbers = Array.from(new Set(this.props.tab.map(cube => cube.number)));
+        const isFull = numbers.length === 5 && ((1 <= numbers <= 5) || (2 <= numbers <= 6));
+        console.log(numbers, numbers.length, isFull);
         let fnScore = 0;
-        this.props.tab.map( (part) => {
-
-        });
-
+        if (isFull) {
+            fnScore = 40;
+        }
         element.innerText = fnScore;
     };
 
@@ -428,7 +459,10 @@ class Table extends Component {
 
     render() {
 
-        const freakyClass = "tg-1lax";
+        const mainTabClass = "tg-1lax";
+
+
+
 
         return (
             <table className="tg">
@@ -440,33 +474,33 @@ class Table extends Component {
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Aces</td>
-                        <td className={freakyClass} data-fn="aces" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="aces" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="aces" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="aces" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Twos</td>
-                        <td className={freakyClass} data-fn="twos" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="twos" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="twos" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="twos" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Threes</td>
-                        <td className={freakyClass} data-fn="threes" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="threes" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="threes" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="threes" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Fours</td>
-                        <td className={freakyClass} data-fn="fours" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="fours" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fours" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fours" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Fives</td>
-                        <td className={freakyClass} data-fn="fives" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="fives" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fives" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fives" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Sixes</td>
-                        <td className={freakyClass} data-fn="sixes" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="sixes" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="sixes" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="sixes" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-2lax score padd2l">Total <span className="description">Upper section</span></td>
@@ -475,38 +509,38 @@ class Table extends Component {
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Three of a kind</td>
-                        <td className={freakyClass} data-fn="totk" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="totk" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="totk" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="totk" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Four of a kind</td>
-                        <td className={freakyClass} data-fn="fotk" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="fotk" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fotk" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fotk" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Full house</td>
-                        <td className={freakyClass} data-fn="full" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="full" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="full" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="full" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Small straight</td>
-                        <td className={freakyClass} data-fn="smalls" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="smalls" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="smalls" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="smalls" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Large straight</td>
-                        <td className={freakyClass} data-fn="larges" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="larges" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="larges" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="larges" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">General</td>
-                        <td className={freakyClass} data-fn="general" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="general" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="general" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="general" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Chance</td>
-                        <td className={freakyClass} data-fn="chance" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={freakyClass} data-fn="chance" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="chance" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="chance" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-2lax score padd2l">Total <span className="description"> Lower section</span></td>

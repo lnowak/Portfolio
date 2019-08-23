@@ -294,7 +294,7 @@ body {
     transform: rotate3d(0, 0, 1, -120deg) rotate3d(1, 0.5, 0, -50deg) scale3d(0.5, 0.5, 0.5);
   }
   90% {
-    transform: rotate3d(0.5, 0, 0.5, 178deg) scale3d(0.5, 0.5, 0.5);
+    transform: rotate3d(0.5, 0, 0.5, -180deg) scale3d(0.5, 0.5, 0.5);
   }
   100% {
     transform: translate3d(35px, 0, 0) rotate3d(0.5, 0, 0.5, 180deg) scale3d(0.8, 0.8, 0.8);
@@ -431,14 +431,17 @@ body {
   font-size: 2rem;
   border: 1px solid #000;
   border-radius: 5px;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
 .tg-2lax {
   font-size: 2rem;
   border: 1px solid #000;
   border-radius: 5px;
+}
+
+.center{
+  text-align: center;
 }
 
 .tg-cly2 {
