@@ -1,23 +1,23 @@
 import React, {Component} from "react";
 import ReactDOM from 'react-dom';
 
-import './../sass/style.scss'; // adres do głównego pliku SASS
-
-const tab = [
-    {id: 1, checked: false, number: 3},
-    {id: 2, checked: false, number: 6},
-    {id: 3, checked: false, number: 3},
-    {id: 4, checked: false, number: 4},
-    {id: 5, checked: false, number: 5}
-];
+import './../sass/style.scss';
 
 // const tab = [
-//     {id: 1, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-//     {id: 2, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-//     {id: 3, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-//     {id: 4, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
-//     {id: 5, checked: false, number: (Math.round(Math.random()*(6-1)+1))}
+//     {id: 1, checked: false, number: 2},
+//     {id: 2, checked: false, number: 5},
+//     {id: 3, checked: false, number: 4},
+//     {id: 4, checked: false, number: 3},
+//     {id: 5, checked: false, number: 2}
 // ];
+
+const tab = [
+    {id: 1, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+    {id: 2, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+    {id: 3, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+    {id: 4, checked: false, number: (Math.round(Math.random()*(6-1)+1))},
+    {id: 5, checked: false, number: (Math.round(Math.random()*(6-1)+1))}
+];
 
 class App extends Component {
 
@@ -37,24 +37,12 @@ class Dice extends Component {
         counter: 1,
         currentPlayer: 1,
         scored: false,
-    };
-
-    // changeScoredTrue = () => {
-    //     console.log(this.state.scored);
-    //     this.setState({
-    //         scored: true,
-    //     })
-    // };
-    //
-    // changeScoredFalse = () => {
-    //     console.log(this.state.scored);
-    //     this.setState({
-    //         scored: false,
-    //     })
-    // };
-
-    calcScore = (chosenElement) => {
-        console.log(chosenElement);
+        totalScore1: 0,
+        totalScore2: 0,
+        upperScore1: 0,
+        upperScore2: 0,
+        lowerScore1: 0,
+        lowerScore2: 2
     };
 
     changeSelected = () => {
@@ -124,6 +112,44 @@ class Dice extends Component {
         //     counter: counter,
         //     currentPlayer: counter %3 === 0 || this.props.scored ? this.state.currentPlayer %2 +1 : this.state.currentPlayer
         // })
+    };
+
+    scoreUpdate = () => {
+        const fields = document.querySelectorAll(`td[data-player = "${this.state.currentPlayer}"] `);
+        // console.log(fields);
+        let sum = 0;
+        fields.forEach(f => {
+            sum += Number(f.innerText);
+        });
+        this.setState( {
+            [`totalScore${this.state.currentPlayer}`]: sum,
+        })
+    };
+
+    upperScoreUpdate = () => {
+        const fields = document.querySelectorAll(`td[data-score = "${this.state.currentPlayer}"] `);
+        // console.log(fields);
+        let sum = 0;
+
+        fields.forEach(f => {
+            sum += Number(f.innerText);
+        });
+        this.setState( {
+            [`upperScore${this.state.currentPlayer}`]: sum,
+        })
+    };
+
+    lowerScoreUpdate = () => {
+        const fields = document.querySelectorAll(`td[data-score2 = "${this.state.currentPlayer}"] `);
+        // console.log(fields);
+        let sum = 0;
+
+        fields.forEach(f => {
+            sum += Number(f.innerText);
+        });
+        this.setState( {
+            [`lowerScore${this.state.currentPlayer}`]: sum,
+        })
     };
 
     componentDidUpdate() {
@@ -210,7 +236,7 @@ class Dice extends Component {
                     )
                 })}
                 <RollButton roll={this.changeRollAgain} counter={this.state.counter} increase={this.increaseCounter} scored={this.props.scored}>Roll the Dice!!!</RollButton>
-                <Table tab={this.state.tab} scored={this.changeScoredTrue} changePlayer={this.changePlayer} calcScore={this.calcScore} currentPlayer={this.state.currentPlayer}/>
+                <Table lowerScoreUpdate={this.lowerScoreUpdate} lowerScore2={this.state.lowerScore2} lowerScore1={this.state.lowerScore1} upperScoreUpdate={this.upperScoreUpdate} upperScore2={this.state.upperScore2} upperScore1={this.state.upperScore1} totalScore1={this.state.totalScore1} totalScore2={this.state.totalScore2} scoreUpdate={this.scoreUpdate} tab={this.state.tab} scored={this.changeScoredTrue} changePlayer={this.changePlayer} calcScore={this.calcScore} currentPlayer={this.state.currentPlayer}/>
             </div>
         )
     }
@@ -245,17 +271,20 @@ class Table extends Component {
         const disabled = Number(e.target.dataset.disabled);
 
         if (player === this.props.currentPlayer && !disabled) {
-            // this.props.calcScore(e.target);
-
             e.target.dataset.disabled = 1;
             e.target.className = "tg-1lax selected";
             const fnName = e.target.dataset.fn;
             this[fnName](e.target);
+            this.props.scoreUpdate();
+            this.props.upperScoreUpdate();
+            this.props.lowerScoreUpdate();
             this.props.changePlayer();
-            // const fnNameScore = e.target.dataset.fn;
-            // this[fnNameScore](e.target);
         }
+
+
     };
+
+
 
     aces = (element) => {
 
@@ -386,6 +415,7 @@ class Table extends Component {
 
     full = (element) => {
         const numbers = this.getRolledNumbers();
+        console.log(numbers);
         const isFull = this.getCountRolledNumbers(numbers, 3) && this.getCountRolledNumbers(numbers, 2);
         let fnScore = 0;
         if (isFull) {
@@ -397,24 +427,21 @@ class Table extends Component {
     smalls = (element) => {
         const numbers = Array.from(new Set(this.props.tab.map(cube => cube.number)));
 
-        const newScoreTab = [];
-        this.props.tab.map( e => {
-            newScoreTab.push(e.number);
-            return newScoreTab
-        });
-        newScoreTab.sort((a,b) => a-b);
-        console.log(newScoreTab);
+        numbers.sort((a,b) => a-b);
+        console.log(numbers);
         let count = 0;
-        newScoreTab.reduce((prev, curr) => {
-            if (prev +1 === curr) {
+        numbers.reduce((prev, curr) => {
+            if (prev + 1=== curr ) {
+                console.log(prev+1, curr);
                 count++;
             } else {
                 count = 0;
+                console.log(prev+1, curr);
             }
             return curr
         }, 0);
 
-        const isFull = count >= 4;
+        const isFull = count >= 3;
 
         console.log(count, numbers, numbers.length, isFull);
         let fnScore = 0;
@@ -426,8 +453,24 @@ class Table extends Component {
 
     larges = (element) => {
         const numbers = Array.from(new Set(this.props.tab.map(cube => cube.number)));
-        const isFull = numbers.length === 5 && ((1 <= numbers <= 5) || (2 <= numbers <= 6));
-        console.log(numbers, numbers.length, isFull);
+
+        numbers.sort((a,b) => a-b);
+        console.log(numbers);
+        let count = 0;
+        numbers.reduce((prev, curr) => {
+            if (prev + 1=== curr ) {
+                console.log(prev+1, curr);
+                count++;
+            } else {
+                count = 0;
+                console.log(prev+1, curr);
+            }
+            return curr
+        }, 0);
+
+        const isFull = count >= 4;
+
+        console.log(count, numbers, numbers.length, isFull);
         let fnScore = 0;
         if (isFull) {
             fnScore = 40;
@@ -457,12 +500,23 @@ class Table extends Component {
         element.innerText = fnScore;
     };
 
+    // componentDidUpdate() {
+    //     let score = 0;
+    //     if (this.props.scored) {
+    //         score += this.fnScore;
+    //         console.log(score);
+    //     }
+    // }
+
     render() {
 
         const mainTabClass = "tg-1lax";
 
-
-
+        let score = 0;
+        if (this.props.scored) {
+            score += fnScore;
+                console.log(fnScore);
+        }
 
         return (
             <table className="tg">
@@ -474,83 +528,83 @@ class Table extends Component {
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Aces</td>
-                        <td className={mainTabClass} data-fn="aces" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="aces" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="aces" data-score="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="aces" data-score="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Twos</td>
-                        <td className={mainTabClass} data-fn="twos" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="twos" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="twos" data-score="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="twos" data-score="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Threes</td>
-                        <td className={mainTabClass} data-fn="threes" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="threes" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="threes" data-score="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="threes" data-score="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Fours</td>
-                        <td className={mainTabClass} data-fn="fours" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="fours" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fours" data-score="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fours" data-score="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Fives</td>
-                        <td className={mainTabClass} data-fn="fives" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="fives" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fives" data-score="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fives" data-score="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Sixes</td>
-                        <td className={mainTabClass} data-fn="sixes" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="sixes" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="sixes" data-score="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="sixes" data-score="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-2lax score padd2l">Total <span className="description">Upper section</span></td>
-                        <td className="tg-2lax score" data-fn="upperTotal" />
-                        <td className="tg-2lax score" data-fn="upperTotal" />
+                        <td className="tg-2lax score center" data-fn="upperTotal"> {this.props.upperScore1} </td>
+                        <td className="tg-2lax score center" data-fn="upperTotal"> {this.props.upperScore2} </td>
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Three of a kind</td>
-                        <td className={mainTabClass} data-fn="totk" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="totk" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="totk" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="totk" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Four of a kind</td>
-                        <td className={mainTabClass} data-fn="fotk" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="fotk" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fotk" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="fotk" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Full house</td>
-                        <td className={mainTabClass} data-fn="full" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="full" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="full" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="full" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Small straight</td>
-                        <td className={mainTabClass} data-fn="smalls" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="smalls" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="smalls" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="smalls" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Large straight</td>
-                        <td className={mainTabClass} data-fn="larges" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="larges" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="larges" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="larges" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">General</td>
-                        <td className={mainTabClass} data-fn="general" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="general" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="general" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="general" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-0lax padd2l">Chance</td>
-                        <td className={mainTabClass} data-fn="chance" data-player="1" data-disabled={0} onClick={this.click} />
-                        <td className={mainTabClass} data-fn="chance" data-player="2" onClick={this.click} />
+                        <td className={mainTabClass} data-fn="chance" data-score2="1" data-player="1" data-disabled={0} onClick={this.click} />
+                        <td className={mainTabClass} data-fn="chance" data-score2="2" data-player="2" onClick={this.click} />
                     </tr>
                     <tr>
                         <td className="tg-2lax score padd2l">Total <span className="description"> Lower section</span></td>
-                        <td className="tg-2lax score" />
-                        <td className="tg-2lax score" />
+                        <td className="tg-2lax score center"> {this.props.lowerScore1} </td>
+                        <td className="tg-2lax score center"> {this.props.lowerScore2} </td>
                     </tr>
                     <tr>
                         <td className="tg-2lax score padd2l">Grand Total</td>
-                        <td className="tg-2lax score" />
-                        <td className="tg-2lax score" />
+                        <td className="tg-2lax score center"> {this.props.totalScore1} </td>
+                        <td className="tg-2lax score center"> {this.props.totalScore2} </td>
                     </tr>
                 </tbody>
             </table>
