@@ -42,7 +42,7 @@ class Dice extends Component {
         upperScore1: 0,
         upperScore2: 0,
         lowerScore1: 0,
-        lowerScore2: 2
+        lowerScore2: 0
     };
 
     changeSelected = () => {
@@ -251,7 +251,7 @@ class RollButton extends Component{
             setTimeout(() => {
                 this.props.roll();
 
-            },600);
+            },6000);
             this.props.increase()
         }
     };
